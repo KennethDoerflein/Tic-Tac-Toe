@@ -18,16 +18,16 @@ function checkGameOver() {
     document.getElementById("resetButton").toggleAttribute("hidden");
     if (boardFull) {
       scores[2]++;
-      document.getElementById("tiesScore").innerText = scores[2];
     }
   }
   if (gameStatus > 0) {
     scores[0]++;
-    document.getElementById("computerScore").innerText = scores[0];
   } else if (gameStatus < 0) {
     scores[1]++;
-    document.getElementById("humanScore").innerText = scores[1];
   }
+  document.getElementById("computerScore").innerText = scores[0];
+  document.getElementById("humanScore").innerText = scores[1];
+  document.getElementById("tiesScore").innerText = scores[2];
 }
 
 function updateBoard(boxNumber, player) {
@@ -208,6 +208,7 @@ function setDifficulty() {
   difficulty = document.getElementById("difficulty").value;
   scores = [0, 0, 0];
   initializeBoard();
+  checkGameOver();
 }
 
 initializeBoard();
