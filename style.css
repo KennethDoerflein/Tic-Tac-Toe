@@ -1,18 +1,19 @@
-.col {
+#board .col {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 5rem !important;
-  max-width: 5rem !important;
-  height: 5rem !important;
-  width: 5rem !important;
+  max-height: 8rem !important;
+  max-width: 8rem !important;
+  height: 8rem !important;
+  width: 8rem !important;
   border: 0.2rem solid black;
-  font-size: 4rem;
+  font-size: 7rem;
   padding-bottom: 0.5rem;
 }
-.container {
-  border: 0.2rem solid black;
-  border-radius: 0.25rem;
-  max-width: 15rem !important;
-  max-height: 15rem !important;
+.container #board {
+  max-width: 24rem !important;
+  max-height: 24rem !important;
+}
+#scores {
+  font-size: 1rem !important;
 }
