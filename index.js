@@ -1,14 +1,37 @@
+document.getElementById("resetButton").onclick = initializeBoard;
 let board;
-let wins = [0, 0];
+let scores = [0, 0, 0]; // computer, human, ties
 let computer = "X";
 let human = "O";
 let empty = null;
+let playersTurn = human;
 const utility = 25;
+
+function checkGameOver() {
+  let gameStatus = checkBoardStatus();
+  let boardFull = checkBoardFull();
+  if (boardFull || gameStatus !== 0) {
+    playersTurn = empty;
+    document.getElementById("resetButton").toggleAttribute("hidden");
+    if (boardFull) {
+      scores[2]++;
+      document.getElementById("tiesScore").innerText = scores[2];
+    }
+  }
+  if (gameStatus > 0) {
+    scores[0]++;
+    document.getElementById("computerScore").innerText = scores[0];
+  } else if (gameStatus < 0) {
+    scores[1]++;
+    document.getElementById("humanScore").innerText = scores[1];
+  }
+}
 
 function updateBoard(boxNumber, player) {
   let row = parseInt(boxNumber / board.length);
   let col = boxNumber - row * board[row].length;
   board[row][col] = player;
+  checkGameOver();
   selectedBox = document.getElementById(boxNumber);
   selectedBox.innerText = player;
   selectedBox.removeEventListener("click", handleBoxClick);
@@ -17,7 +40,7 @@ function updateBoard(boxNumber, player) {
 
 function checkBoardFull() {
   for (let row = 0; row < board.length; row++) {
-    if (board[row].indexOf(null) !== -1) {
+    if (board[row].indexOf(empty) !== -1) {
       return false;
     }
   }
@@ -122,27 +145,36 @@ function findBestMove() {
 }
 
 function moveComputer() {
-  bestMove = findBestMove(board);
-  boxNumber = bestMove[0] * board.length + bestMove[1];
-  updateBoard(boxNumber, computer);
+  if (playersTurn === computer) {
+    playersTurn = human;
+    bestMove = findBestMove(board);
+    boxNumber = bestMove[0] * board.length + bestMove[1];
+    updateBoard(boxNumber, computer);
+  }
 }
 
 function handleBoxClick(event) {
-  updateBoard(parseInt(event.target.id), human);
-  setTimeout(function () {
-    moveComputer();
-  }, 800);
+  if (playersTurn === human) {
+    playersTurn = computer;
+    updateBoard(parseInt(event.target.id), human);
+    setTimeout(function () {
+      moveComputer();
+    }, 800);
+  }
 }
 
 function initializeBoard() {
-  var boxes = document.getElementsByClassName("col");
-  for (var i = 0; i < boxes.length; i++) {
+  let boxes = document.getElementsByClassName("box");
+  document.getElementById("resetButton").toggleAttribute("hidden");
+  playersTurn = human;
+  for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", handleBoxClick);
+    boxes[i].innerText = "";
   }
   board = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
+    [empty, empty, empty],
+    [empty, empty, empty],
+    [empty, empty, empty],
   ];
 }
 
