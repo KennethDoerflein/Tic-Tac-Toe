@@ -1,4 +1,6 @@
 document.getElementById("resetButton").onclick = initializeBoard;
+document.getElementById("difficulty").onchange = setDifficulty;
+
 let board;
 let scores = [0, 0, 0]; // computer, human, ties
 let computer = "X";
@@ -6,6 +8,7 @@ let human = "O";
 let empty = null;
 let playersTurn = human;
 const utility = 25;
+let difficulty = "1";
 
 function checkGameOver() {
   let gameStatus = checkBoardStatus();
@@ -131,7 +134,12 @@ function findBestMove() {
     for (let col = 0; col < board[row].length; col++) {
       if (board[row][col] === empty) {
         board[row][col] = computer;
-        let minimaxVal = minimax(0, false);
+        let minimaxVal = empty;
+        if (difficulty === "99") {
+          minimaxVal = minimax(0, false);
+        } else if (difficulty === "1") {
+          minimaxVal = minimax(0, true);
+        }
         board[row][col] = empty;
         if (minimaxVal > bestVal) {
           bestMove[0] = row;
@@ -147,8 +155,24 @@ function findBestMove() {
 function moveComputer() {
   if (playersTurn === computer) {
     playersTurn = human;
-    bestMove = findBestMove(board);
-    boxNumber = bestMove[0] * board.length + bestMove[1];
+    let move = empty;
+    switch (difficulty) {
+      case "99":
+        move = findBestMove(board);
+        break;
+      case "1":
+        move = findBestMove(board);
+        break;
+      case "2":
+        //move = findBestMove(board);
+        break;
+      case "3":
+        //move = findBestMove(board);
+        break;
+      default:
+        break;
+    }
+    boxNumber = move[0] * board.length + move[1];
     updateBoard(boxNumber, computer);
   }
 }
@@ -165,7 +189,9 @@ function handleBoxClick(event) {
 
 function initializeBoard() {
   let boxes = document.getElementsByClassName("box");
-  document.getElementById("resetButton").toggleAttribute("hidden");
+  if (playersTurn === empty) {
+    document.getElementById("resetButton").toggleAttribute("hidden");
+  }
   playersTurn = human;
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", handleBoxClick);
@@ -176,6 +202,12 @@ function initializeBoard() {
     [empty, empty, empty],
     [empty, empty, empty],
   ];
+}
+
+function setDifficulty() {
+  difficulty = document.getElementById("difficulty").value;
+  scores = [0, 0, 0];
+  initializeBoard();
 }
 
 initializeBoard();

@@ -13,6 +13,15 @@
   </head>
   <body>
     <div class="container text-center mt-5">
+      <div class="row-cols-sm-auto g-3 row align-items-baseline">
+        <span class="col-3 ms-auto">Difficulty: </span>
+        <select id="difficulty" class="form-select form-select-sm mb-4 text-center col-3 me-auto">
+          <option value="1" selected>Easy</option>
+          <!-- <option value="2">Medium</option>
+          <option value="3">Hard</option> -->
+          <option value="99">Impossible</option>
+        </select>
+      </div>
       <div id="board" class="container">
         <div class="row">
           <div id="0" class="col box"></div>
@@ -37,7 +46,7 @@
           <div class="col">Computer: <span id="computerScore">0</span></div>
         </div>
       </div>
-      <button id="resetButton" type="button" class="btn btn-sm btn-danger mt-3">New Game</button>
+      <button hidden id="resetButton" type="button" class="btn btn-sm btn-danger mt-3">New Game</button>
     </div>
     <script src="./index.js"></script>
   </body>

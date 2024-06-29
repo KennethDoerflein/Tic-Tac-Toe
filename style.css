@@ -11,7 +11,7 @@
   border-bottom: 0.4rem solid black;
   font-size: 6.5rem;
   cursor: pointer;
-/*   padding-bottom: 15px; */
+  /*   padding-bottom: 15px; */
 }
 #board .col:nth-child(3n) {
   border-right: none;
@@ -27,4 +27,7 @@
 #scores {
   max-width: 25rem !important;
   font-size: 1rem !important;
+}
+select {
+  max-width: 8rem !important;
 }
