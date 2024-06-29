@@ -11,23 +11,33 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous" />
   </head>
-  <body class="my-5 mx-5">
-    <div class="container text-center">
-      <div class="row">
-        <div id="0" class="col"></div>
-        <div id="1" class="col"></div>
-        <div id="2" class="col"></div>
+  <body>
+    <div class="container text-center mt-5">
+      <div id="board" class="container">
+        <div class="row">
+          <div id="0" class="col box"></div>
+          <div id="1" class="col box"></div>
+          <div id="2" class="col box"></div>
+        </div>
+        <div class="row">
+          <div id="3" class="col box"></div>
+          <div id="4" class="col box"></div>
+          <div id="5" class="col box"></div>
+        </div>
+        <div class="row">
+          <div id="6" class="col box"></div>
+          <div id="7" class="col box"></div>
+          <div id="8" class="col box"></div>
+        </div>
       </div>
-      <div class="row">
-        <div id="3" class="col"></div>
-        <div id="4" class="col"></div>
-        <div id="5" class="col"></div>
+      <div id="scores" class="container mt-3">
+        <div class="row">
+          <div class="col">Human: <span id="humanScore">0</span></div>
+          <div class="col">Ties: <span id="tiesScore">0</span></div>
+          <div class="col">Computer: <span id="computerScore">0</span></div>
+        </div>
       </div>
-      <div class="row">
-        <div id="6" class="col"></div>
-        <div id="7" class="col"></div>
-        <div id="8" class="col"></div>
-      </div>
+      <button id="resetButton" type="button" class="btn btn-sm btn-danger mt-3">New Game</button>
     </div>
     <script src="./index.js"></script>
   </body>

@@ -1,3 +1,4 @@
+document.getElementById("resetButton").onclick = initializeBoard;
 let board;
 let scores = [0, 0, 0]; // computer, human, ties
 let computer = "X";
@@ -11,14 +12,18 @@ function checkGameOver() {
   let boardFull = checkBoardFull();
   if (boardFull || gameStatus !== 0) {
     playersTurn = empty;
-    if (boardFull || gameStatus !== 0) {
+    document.getElementById("resetButton").toggleAttribute("hidden");
+    if (boardFull) {
       scores[2]++;
+      document.getElementById("tiesScore").innerText = scores[2];
     }
   }
   if (gameStatus > 0) {
     scores[0]++;
+    document.getElementById("computerScore").innerText = scores[0];
   } else if (gameStatus < 0) {
     scores[1]++;
+    document.getElementById("humanScore").innerText = scores[1];
   }
 }
 
@@ -159,9 +164,12 @@ function handleBoxClick(event) {
 }
 
 function initializeBoard() {
-  let boxes = document.getElementsByClassName("col");
+  let boxes = document.getElementsByClassName("box");
+  document.getElementById("resetButton").toggleAttribute("hidden");
+  playersTurn = human;
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", handleBoxClick);
+    boxes[i].innerText = "";
   }
   board = [
     [empty, empty, empty],
