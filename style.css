@@ -24,5 +24,6 @@
   max-height: 24rem !important;
 }
 #scores {
+  max-width: 25rem !important;
   font-size: 1rem !important;
 }
