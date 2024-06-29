@@ -1,5 +1,5 @@
 let board;
-let wins = [0, 0];
+let scores = [0, 0, 0]; // computer, human, ties
 let computer = "X";
 let human = "O";
 let empty = null;
@@ -11,11 +11,14 @@ function checkGameOver() {
   let boardFull = checkBoardFull();
   if (boardFull || gameStatus !== 0) {
     playersTurn = empty;
+    if (boardFull || gameStatus !== 0) {
+      scores[2]++;
+    }
   }
   if (gameStatus > 0) {
-    wins[0]++;
+    scores[0]++;
   } else if (gameStatus < 0) {
-    wins[1]++;
+    scores[1]++;
   }
 }
 
