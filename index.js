@@ -9,6 +9,7 @@ let empty = null;
 let playersTurn = human;
 const utility = 25;
 let difficulty = "1";
+let maxDepth = 7;
 
 function checkGameOver() {
   let gameStatus = checkBoardStatus();
@@ -97,7 +98,7 @@ function minimax(depth, isMax) {
   let boardStatus = checkBoardStatus();
   if (boardStatus === utility || boardStatus === -utility) {
     return boardStatus - depth * (boardStatus / utility);
-  } else if (checkBoardFull()) {
+  } else if (checkBoardFull() || depth > maxDepth) {
     return 0;
   }
 
@@ -135,9 +136,9 @@ function findBestMove() {
       if (board[row][col] === empty) {
         board[row][col] = computer;
         let minimaxVal = empty;
-        if (difficulty === "99") {
+        if (difficulty !== "1") {
           minimaxVal = minimax(0, false);
-        } else if (difficulty === "1") {
+        } else {
           minimaxVal = minimax(0, true);
         }
         board[row][col] = empty;
@@ -158,16 +159,16 @@ function moveComputer() {
     let move = empty;
     switch (difficulty) {
       case "99":
-        move = findBestMove(board);
+        maxDepth = 10;
+        move = findBestMove();
         break;
       case "1":
-        move = findBestMove(board);
+        maxDepth = 1;
+        move = findBestMove();
         break;
       case "2":
-        //move = findBestMove(board);
-        break;
-      case "3":
-        //move = findBestMove(board);
+        maxDepth = 3;
+        move = findBestMove();
         break;
       default:
         break;
