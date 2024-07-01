@@ -16,7 +16,6 @@
 #board .col:nth-child(3n) {
   border-right: none;
 }
-
 #board .row:last-child .col {
   border-bottom: none;
 }
@@ -30,4 +29,7 @@
 }
 select {
   max-width: 8rem !important;
+}
+.boxUsed {
+  cursor: not-allowed !important;
 }

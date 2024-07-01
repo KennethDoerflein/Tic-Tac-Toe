@@ -3,6 +3,7 @@ document.getElementById("difficulty").onchange = setDifficulty;
 
 let board;
 let scores = [0, 0, 0]; // computer, human, ties
+let weights;
 let computer = "X";
 let human = "O";
 let empty = null;
@@ -12,12 +13,23 @@ let difficulty = "1";
 const maxPossibleDepth = 9;
 let maxDepth = maxPossibleDepth;
 
+function getRandWeight(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 function checkGameOver() {
   let gameStatus = checkBoardStatus();
   let boardFull = checkBoardFull();
   if (boardFull || gameStatus !== 0) {
     playersTurn = empty;
+    let boxes = document.getElementsByClassName("box");
+
     document.getElementById("resetButton").toggleAttribute("hidden");
+
+    for (let i = 0; i < boxes.length; i++) {
+      boxes[i].classList.add("boxUsed");
+    }
+
     if (boardFull) {
       scores[2]++;
     }
@@ -40,6 +52,7 @@ function updateBoard(boxNumber, player) {
   selectedBox = document.getElementById(boxNumber);
   selectedBox.innerText = player;
   selectedBox.removeEventListener("click", handleBoxClick);
+  selectedBox.classList.add("boxUsed");
   //console.log("Row: " + row + ", Col: " + col);
 }
 
@@ -110,7 +123,11 @@ function minimax(depth, isMax) {
       for (let col = 0; col < board[row].length; col++) {
         if (board[row][col] === empty) {
           board[row][col] = computer;
-          best = Math.max(best, minimax(depth + 1, false));
+          if (difficulty !== "99") {
+            best = Math.max(best + weights[row][col], minimax(depth + 1, false));
+          } else {
+            best = Math.max(best, minimax(depth + 1, false));
+          }
           board[row][col] = empty;
         }
       }
@@ -121,7 +138,11 @@ function minimax(depth, isMax) {
       for (let col = 0; col < board[row].length; col++) {
         if (board[row][col] === empty) {
           board[row][col] = human;
-          best = Math.min(best, minimax(depth + 1, true));
+          if (difficulty !== "99") {
+            best = Math.min(best - weights[row][col], minimax(depth + 1, true));
+          } else {
+            best = Math.min(best, minimax(depth + 1, true));
+          }
           board[row][col] = empty;
         }
       }
@@ -185,7 +206,7 @@ function handleBoxClick(event) {
     updateBoard(parseInt(event.target.id), human);
     setTimeout(function () {
       moveComputer();
-    }, 800);
+    }, 400);
   }
 }
 
@@ -197,12 +218,18 @@ function initializeBoard() {
   playersTurn = human;
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", handleBoxClick);
+    boxes[i].classList.remove("boxUsed");
     boxes[i].innerText = "";
   }
   board = [
     [empty, empty, empty],
     [empty, empty, empty],
     [empty, empty, empty],
+  ];
+  weights = [
+    [getRandWeight(2, 6), getRandWeight(1, 6), getRandWeight(2, 6)],
+    [getRandWeight(1, 6), getRandWeight(2, 8), getRandWeight(1, 6)],
+    [getRandWeight(2, 6), getRandWeight(1, 6), getRandWeight(2, 6)],
   ];
 }
 
