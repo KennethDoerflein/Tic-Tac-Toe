@@ -9,7 +9,8 @@ let empty = null;
 let playersTurn = human;
 const utility = 25;
 let difficulty = "1";
-let maxDepth = 7;
+const maxPossibleDepth = 9;
+let maxDepth = maxPossibleDepth;
 
 function checkGameOver() {
   let gameStatus = checkBoardStatus();
@@ -159,11 +160,11 @@ function moveComputer() {
     let move = empty;
     switch (difficulty) {
       case "99":
-        maxDepth = 10;
+        maxDepth = maxPossibleDepth;
         move = findBestMove();
         break;
       case "1":
-        maxDepth = 1;
+        maxDepth = maxPossibleDepth;
         move = findBestMove();
         break;
       case "2":
