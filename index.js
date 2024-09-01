@@ -195,7 +195,7 @@ function moveComputer() {
       default:
         break;
     }
-    boxNumber = move[0] * board.length + move[1];
+    const boxNumber = move[0] * board.length + move[1];
     updateBoard(boxNumber, computer);
   }
 }
